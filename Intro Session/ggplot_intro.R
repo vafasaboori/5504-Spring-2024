@@ -76,6 +76,9 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 ggplot(mpg, aes(x = displ, y = hwy, linetype = drv)) + 
   geom_smooth()
 
+ggplot(mpg, aes(x = displ, y = hwy, linetype = class)) + 
+  geom_smooth()
+
 # or color
 ggplot(mpg, aes(x = displ, y = hwy, color = drv)) + 
   geom_smooth()
