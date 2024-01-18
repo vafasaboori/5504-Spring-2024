@@ -56,7 +56,7 @@ summary(bike_lm)
 
 # c. Predict the price for a bike that weighs 15 pounds
 predicted_price <- predict(bike_lm, newdata = data.frame(Weight = 15))
-cat("Predicted price for a 15-pound bike:", predicted_price, "\n")
+cat("Predicted price for a 15-pound bike:", predicted_price)
 
 # Scatter plot with regression line
 library(ggplot2)
@@ -66,8 +66,6 @@ ggplot(bike, aes(x = Weight, y = Price, label = Brand)) + #label for point
   geom_point() +
   geom_smooth(method = "lm", se = TRUE, color = "blue") +  # Add regression line
   geom_text_repel(aes(label = Brand), box.padding = 0.5) + # 0.5 x  unit space
-  # hjust -- 0:left, 0.5:Center, 1.0:right justified labels
-  # vjust -- 0:bottom, 0.5:Center, 1.0:top justified labels
     labs(title = "Scatter Plot of Bike Weight vs Price",
        x = "Weight (pounds)",
        y = "Price ($)") +
@@ -132,6 +130,7 @@ armands %>% ggplot(aes(sample = std_residuals)) +
 
 # Calculating Leverage (Hat Values)
 armands$hat <- hatvalues(armands_lm) #none greater than 6/10=0.6
+
 qplot (armands$Population, armands$hat) + # quickplot
   geom_hline(yintercept=0.6, linetype="dashed", color = "red")
 
