@@ -35,7 +35,7 @@ reynolds %>% ggplot(aes(x = predicted, y = std_residuals)) +
   geom_point() +
   geom_smooth(method = "gam", se = TRUE)  # std residual analysis shows curvilinear pattern
 # Generalized Additive Model (GAM) 
-# GAM is a flexible model for complex non-linear relationships without a specific  form.
+# GAM is a flexible model for complex non-linear relationships without a specific form.
 
 # Other methods:
 # loess: The locally weighted scatterplot smoothing (LOESS) non-parametric regression method 
@@ -122,7 +122,7 @@ mpg$std_residuals <- rstandard(mpg_model)
 library(tidyverse)
 mpg %>% ggplot(aes(x = predicted, y = std_residuals)) + 
   geom_point() + 
-  scale_y_continuous(limits = c(-3, 3))# we observe wedge pattern
+ scale_y_continuous(limits = c(-3, 3))# we observe wedge pattern
 
 # This can be corrected by transforming the dependent variable to ln scale.
 mpg$LnMPG <- log(mpg$MPG)
