@@ -39,7 +39,7 @@ autoplot(hsales) +
 
 # Section 2 Moving Average ----
 
-library(TTR) #Technical Trading Rules Package
+library(TTR) # Technical Trading Rules Package
 library (tidyverse)
 
 # Read Excel File 
@@ -91,7 +91,6 @@ library(fpp2) # Forecasting: principles and practice" (2nd ed, 2018) by Rob J Hy
 
 # Residential electricity sales (excluding hot water) for South Australia: 1989–2008.
 glimpse (elecsales)
-autoplot(elecsales)
 
 # plot
 autoplot(elecsales) + xlab("Year") + ylab("GWh") +
@@ -102,18 +101,19 @@ ma(elecsales, 5)
 
 # plot 5 MA along with the original data
 autoplot(elecsales, series="Data") + # plots time series label as "Data"
-  autolayer(ma(elecsales,3), series="5-MA") + # add alayer, plots 5-MA
+  autolayer(ma(elecsales,3), series="3-MA") + # add alayer, plots 3-MA
   xlab("Year") + ylab("GWh") +
   ggtitle("Annual electricity sales: South Australia")
           
 # Lets's compare it with 7 MA (smoother)
 autoplot(elecsales, series="Data") + # plots time series label as "Data"
-  autolayer(ma(elecsales,7), series="5-MA") + # add alayer, plots 5-MA
+  autolayer(ma(elecsales,7), series="7-MA") + # add alayer, plots 5-MA
   xlab("Year") + ylab("GWh") +
   ggtitle("Annual electricity sales: South Australia")
 #We observe that k=7 is smoother than k=3
 
 # This smoothing effect for high values of k could be used to remove seasonality
+
 # Let's look at (elecequip): quarterly data on electrical equipment manufacturing
 data(elecequip)
 autoplot(elecequip)
@@ -125,7 +125,7 @@ autoplot(elecequip, series="Data") +
 # Notice that the smooth line shows no seasonality (only trend and cycle)
 
 # Section 3 Weighted Moving Average -----
-
+library(TTR)
 weights <- c(.17, .33, .5)
 gas$gas_wma <- WMA(gas$Sales, n=3, wts = weights) 
 print(gas$gas_wma)
@@ -144,6 +144,7 @@ gas %>%
 # Section 4 Exponential Smoothing -----
 
 #Exponential Smoothing
+library(TTR)
 gas$gas_exp <- EMA(gas$Sales, n=1, ratio = .2) 
 # n = number of periods to average over, in our case n should be set equal to 1.
 
@@ -166,6 +167,7 @@ gas %>%
   
 
 # More comprehensive example from fpp2 library
+library(fpp2)
 oildata <- window(oil, start=1996) # Oil production in Saudi Arabia from 1996 to 2013.
 
 # Time Series Plot
@@ -190,7 +192,6 @@ fc1 <- ses(oildata,
 summary(fc1)
 
 # Visualization to compare two forecast methods
-
 autoplot(fc) +
   autolayer(fitted(fc), series="Fitted") + # forecast values
   ylab("Oil (millions of tonnes)") + xlab("Year")
@@ -237,17 +238,16 @@ predict(bike_slr, list(Year=11))
 
 
 # Section 6 Trend projection (Non-linear regression) -----
+library(readxl)
+cholesterol <- read_excel("cholesterol.xlsx")
+glimpse(cholesterol)
+head(cholesterol)
 
 # Visualization
 cholesterol %>% 
   ggplot(aes(Year, Revenue)) + 
   geom_point() + 
   geom_smooth(method=lm, formula = y ~ poly(x, 2), color = "peachpuff")
-
-library(readxl)
-cholesterol <- read_excel("cholesterol.xlsx")
-glimpse(cholesterol)
-head(cholesterol)
 
 #Simple Linear Regression (Raw=F Orthogonal Polynomials)
 cholestrol_model <- lm(Revenue ~ poly(Year, degree=2, raw=T), data = cholesterol)
@@ -362,7 +362,6 @@ autoplot(AirPassengers_decomp$seasonal)
 autoplot(AirPassengers_decomp$trend)
 autoplot(AirPassengers_decomp$random)
 
-
 # Decomposition example from fpp2 (x11 method)
 autoplot(elecequip)
 # Monthly production of electrical equipment. January 1996 - March 2012
@@ -391,6 +390,3 @@ autoplot(elecequip, series="Data") +
   ggtitle("Electrical equipment manufacturing (Euro area)")  +
   scale_colour_manual(values=c("lightgray","navy","coral"),
                       breaks=c("Data","Seasonally Adjusted","Trend"))
-
-
- 
